@@ -8,6 +8,11 @@ export default createGlobalStyle`
     box-sizing: border-box;
 }
 
-
+body{
+    background: ${(props) => props.theme.colors.bacground};
+    font-family: sans-serif;
+    font-size:14px;
+    color: #333;
+}
 
 `;
