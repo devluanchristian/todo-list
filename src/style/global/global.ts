@@ -9,10 +9,14 @@ export default createGlobalStyle`
 }
 
 body{
-    background: ${(props) => props.theme.colors.bacground};
-    font-family: sans-serif;
+    background: ${(props) => props.theme.colors.background};
+    font-family: 'Poppins', sans-serif;
     font-size:14px;
-    color: #333;
+    color: ${(props) => props.theme.colors.text};
 }
-
+.container-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 `;

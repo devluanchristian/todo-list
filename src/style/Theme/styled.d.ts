@@ -8,8 +8,10 @@ declare module "styled-components" {
       primary: string;
       secundary: string;
 
-      bacground: string;
+      background: string;
       text: string;
+      button: string;
+      input: string;
     };
   }
 }
