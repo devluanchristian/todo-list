@@ -8,10 +8,11 @@ export const InputLabelStyled = styled.input`
   border-radius: 5px;
   padding: 10px;
   outline: none;
+  font-size: 13px;
   background-color: ${(props) => props.theme.colors.input};
   color: ${(props) => props.theme.colors.text};
 
   ::placeholder {
-    padding-left: 3px;
+    padding-left: 2px;
   }
 `;

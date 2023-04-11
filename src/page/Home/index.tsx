@@ -5,6 +5,7 @@ import light from "../../style/Theme/light";
 import { useState } from "react";
 import dark from "../../style/Theme/dark";
 import Form from "../../components/Form";
+import Footer from "../../components/Footer";
 
 const Home = () => {
   const [theme, setTheme] = useState(light);
@@ -19,6 +20,7 @@ const Home = () => {
       <div className="container-form">
         <Form />
       </div>
+      <Footer/>
     </ThemeProvider>
   );
 };

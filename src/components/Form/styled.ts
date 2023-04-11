@@ -6,14 +6,15 @@ export const FormContainer = styled.form`
   flex-direction: column;
   height: 600px;
   width: 600px;
-  border: 1px solid red;
   padding: 30px;
+  border: 1px solid red;
 
   h1 {
     font-weight: bold;
     padding-bottom: 30px;
   }
-  span {
-    border: 2px solid white;
+  hr{
+    margin-top: 4%;
   }
+
 `;
