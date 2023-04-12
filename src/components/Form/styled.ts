@@ -7,7 +7,6 @@ export const FormContainer = styled.form`
   height: 600px;
   width: 600px;
   padding: 30px;
-  border: 1px solid red;
 
   h1 {
     font-weight: bold;
