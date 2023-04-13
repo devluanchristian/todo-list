@@ -22,9 +22,11 @@ const Form = () => {
     e.preventDefault();
   };
 
+  // Função de adicionar as tarefas
   const handleAddTask = () => {
     if (!input)
       return toast.error("Insira uma tarefa", {
+        position: "bottom-right",
         autoClose: 2000,
       });
     let newList = [...list];
@@ -35,7 +37,7 @@ const Form = () => {
     });
     setList(newList);
     toast("🚀 Tarefa criada", {
-      position: "top-right",
+      position: "bottom-right",
       autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -48,6 +50,7 @@ const Form = () => {
     setInput("");
   };
 
+  // Função de remover a tarefa selecionada
   const handleRemoveTask = (id: number) => {
     const newList = list.filter((list) => list.id !== id);
     setList(newList);
@@ -61,8 +64,31 @@ const Form = () => {
     }
     localStorage.setItem("list", JSON.stringify(dataList));
     toast.success("Tarefa excluida", {
+      position: "bottom-right",
       autoClose: 2000,
     });
+  };
+
+  // Função para fazer a checagem se a tarefa foi concluida ou não
+  const handleCheckTask = (id: number) => {
+    const newList = list.map((item) => {
+      if (item.id === id) {
+        item.done = !item.done;
+      }
+      return item;
+    });
+    setList(newList);
+
+    //buscando a lista no localstore autalizada
+    const dataList = JSON.parse(localStorage.getItem("list") || "[]");
+
+    const indexListToUpdate = dataList.findIndex(
+      (item: IItem) => item.id === id
+    );
+    if (indexListToUpdate !== "") {
+      dataList[indexListToUpdate].done = !dataList[indexListToUpdate].done;
+      localStorage.setItem("list", JSON.stringify(dataList));
+    }
   };
 
   return (
@@ -85,13 +111,14 @@ const Form = () => {
           {list.length ? (
             list.map((item, index) => (
               <ListItem
+                updateTask={() => handleCheckTask(item.id)}
                 key={item.id}
                 item={item}
                 removeTask={() => handleRemoveTask(item.id)}
               />
             ))
           ) : (
-            <p>Nenhuma tarefa criada</p>
+            <p>Nenhuma tarefa criada ...</p>
           )}
         </div>
       </InputContainer>

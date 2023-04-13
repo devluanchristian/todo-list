@@ -6,20 +6,22 @@ import { ImBin } from "react-icons/im";
 interface IItemDTO {
   item: IItem;
   removeTask: () => void;
+  updateTask: (updatedItem: IItem) => void;
 }
-const ListItem = ({ item, removeTask}: IItemDTO) => {
-  
+const ListItem = ({ item, removeTask, updateTask }: IItemDTO) => {
   const [isChecked, setIsChecked] = useState(item.done);
+
+  const handleCheck = () => {
+    const updatedItem = { ...item, done: !isChecked };
+    updateTask(updatedItem);
+    setIsChecked(!isChecked);
+  };
 
   return (
     <ListItemStyled done={isChecked}>
       <div className="container-input-label">
-        <input
-          type="checkbox"
-          checked={isChecked}
-          onChange={(e) => setIsChecked(e.target.checked)}
-        />
-        <label>{item.name} - {item.done.toString()}</label>
+        <input type="checkbox" checked={isChecked} onChange={handleCheck} />
+        <label>{item.name}</label>
       </div>
       <div className="btn-remove">
         <button onClick={removeTask}>
@@ -31,3 +33,6 @@ const ListItem = ({ item, removeTask}: IItemDTO) => {
 };
 
 export default ListItem;
+
+
+ 
