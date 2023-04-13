@@ -20,7 +20,6 @@ const Form = () => {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    console.log(input);
   };
 
   const handleAddTask = () => {
@@ -80,15 +79,20 @@ const Form = () => {
           <Button addTask={handleAddTask} />
         </div>
         <hr />
-
         <div className="container-list">
-          {list.map((item, index) => (
-            <ListItem
-              key={item.id}
-              item={item}
-              removeTask={() => handleRemoveTask(item.id)}
-            />
-          ))}
+          {/* lógica condicional ternária para verificar se a lista possui algum item. 
+            Se houver itens na lista, ele irá mapear cada item para um componente  */}
+          {list.length ? (
+            list.map((item, index) => (
+              <ListItem
+                key={item.id}
+                item={item}
+                removeTask={() => handleRemoveTask(item.id)}
+              />
+            ))
+          ) : (
+            <p>Nenhuma tarefa criada</p>
+          )}
         </div>
       </InputContainer>
     </FormContainer>
