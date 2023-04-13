@@ -1,27 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormContainer } from "./styled";
 import InputLabel from "../InputLabel";
 import InputContainer from "../InputContainer";
 import Button from "../Button";
 import { IItem } from "../../types/Item";
 import ListItem from "../ListItem";
-import { RiDeleteBin5Line } from 'react-icons/ri';
-
+import { toast } from "react-toastify";
 
 const Form = () => {
   const [input, setInput] = useState("");
-  const [list, setList] = useState<IItem[]>([
-    {
-      id: 1,
-      name: "Comprar biscoito",
-      done: false,
-    },
-    {
-      id: 2,
-      name: "Comprar Pão",
-      done: true,
-    },
-  ]);
+  const [list, setList] = useState<IItem[]>([]);
+
+  useEffect(() => {
+    const task = localStorage.getItem("list");
+    if (task) {
+      setList(JSON.parse(task));
+    }
+  }, []);
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -29,7 +24,10 @@ const Form = () => {
   };
 
   const handleAddTask = () => {
-    if (!input) return alert("Insira uma tarefa");
+    if (!input)
+      return toast.error("Insira uma tarefa", {
+        autoClose: 2000,
+      });
     let newList = [...list];
     newList.push({
       id: list.length + 1,
@@ -37,12 +35,37 @@ const Form = () => {
       done: false,
     });
     setList(newList);
+    toast("🚀 Tarefa criada", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+    localStorage.setItem("list", JSON.stringify(newList));
     setInput("");
   };
+
   const handleRemoveTask = (id: number) => {
     const newList = list.filter((list) => list.id !== id);
     setList(newList);
+    const dataList = JSON.parse(localStorage.getItem("list") || "[]");
+
+    const indexListToRemove = dataList.findIndex(
+      (list: { id: number }) => list.id === id
+    );
+    if (indexListToRemove !== "") {
+      dataList.splice(indexListToRemove, 1);
+    }
+    localStorage.setItem("list", JSON.stringify(dataList));
+    toast.success("Tarefa excluida", {
+      autoClose: 2000,
+    });
   };
+
   return (
     <FormContainer onSubmit={handleSubmit}>
       <h1>TODOLIST</h1>
@@ -60,11 +83,13 @@ const Form = () => {
 
         <div className="container-list">
           {list.map((item, index) => (
-            <ListItem key={index} item={item} />
+            <ListItem
+              key={item.id}
+              item={item}
+              removeTask={() => handleRemoveTask(item.id)}
+            />
           ))}
-          RiDeleteBin5Line
         </div>
-     
       </InputContainer>
     </FormContainer>
   );
