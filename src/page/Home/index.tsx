@@ -20,7 +20,7 @@ const Home = () => {
       <div className="container-form">
         <Form />
       </div>
-      <Footer/>
+      <Footer />
     </ThemeProvider>
   );
 };
